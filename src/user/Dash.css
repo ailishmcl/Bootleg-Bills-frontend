@@ -1,0 +1,30 @@
+.dash-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-title {
+    display: flex;
+    align-self: center;
+}
+
+.dash-contents {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.order-table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* background-color: blue; */
+}
+
+.inventory-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* background-color: green; */
+}
