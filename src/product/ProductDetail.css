@@ -1,0 +1,144 @@
+.detailModalFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.mainImg {
+    display: flex;
+    justify-content: center;
+}
+
+.detailImg {
+    width: 90%;
+}
+
+.images {
+    display: flex;
+    flex-direction: column;
+}
+
+.img-thumbs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 25px
+}
+
+.img-thumbs div {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+}
+
+.thumb {
+    width: 100%;
+}
+
+.selected-img {
+    width: 100%;
+    filter: opacity(50%);
+}
+
+.detailsInfo {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-content: space-between;
+    align-items: stretch;
+    margin-left: 20px;
+    /* background-color: blue; */
+}
+
+/* .audioPlayer {
+    background-color: green;
+} */
+
+.playButton {
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.player {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.arrow {
+    width: 0; 
+    height: 0;
+    margin-left: 27.78%;
+    margin-top: 27.78%;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-left: 20px solid black; 
+}
+
+.seekBar {
+    display: flex;
+    position: relative;
+    height: 13px;
+    width: 250px;
+    border: 1px solid black;
+    background-color: white;
+    margin-left: 10px;
+}
+
+.elapsed {
+    display: flex;
+    position: absolute;
+    height: 11px;
+    width: 160px;
+    background-color: black;
+}
+
+.quantityCounter {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.numInput {
+    height: 38px;
+    width: 50px;
+    text-align: center;
+}
+
+
+/* Audio Player */
+
+#audio {
+    margin-bottom: 30px;
+}
+
+audio::-webkit-media-controls-panel {
+
+    margin: 10px;
+
+}
+
+
+audio::-webkit-media-controls-play-button {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10%; 
+}
+
+
+@media (max-width: 987px) {
+
+    audio {
+       /* display: none; */
+       width: 80px;
+   }
+   
+   
+   }
+
