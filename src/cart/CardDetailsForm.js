@@ -4,10 +4,10 @@ import { Button, Container, Form } from 'react-bootstrap'
 export default function CardDetailsForm(props) {
 
 
-    const handleSubmit = () => {
-        console.log("payment details added")
-        // props.setorderForm(orderForm => [...orderForm, ])
-    }
+    // const handleSubmit = () => {
+    //     console.log("payment details added")
+    //     // props.setorderForm(orderForm => [...orderForm, ])
+    // }
   return (
     <div>
         <h3> Enter Card Details: </h3>
@@ -27,7 +27,6 @@ export default function CardDetailsForm(props) {
                 <Form.Control name="cvv" onChange={props.handleChange}/> 
             </Form.Group>
 
-            <Button variant="primary" onClick={(e) => handleSubmit(e)}> Submit Payment Details </Button>
         </Container>
     </div>
   )

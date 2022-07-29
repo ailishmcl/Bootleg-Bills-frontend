@@ -17,18 +17,17 @@ import Modal from 'react-modal'
 import Footer from './footer/Footer'
 import NewsLetter from './footer/NewsLetter'
 import Checkout from './cart/Checkout' 
-
-
-
-
+import OrderConfirmation from './cart/OrderConfirmation'
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Image from 'react-bootstrap/Image'
+import logo from './product/images/nav_logo_new.png'
 
-
+// const logo = './product/images/logo.png'
 
 
 
@@ -36,12 +35,41 @@ import Navbar from 'react-bootstrap/Navbar';
 export default function App() {
   const [cart, setCart] = useState([])
   const [cartCount, setCartCount] = useState(0)
-
-
+  
   const navigation = useNavigate()
+  
+  const [mostPopular, setMostPopular] = useState([])
+
+
+
+  const [isAuth, setIsAuth] = useState(false)
+  const [user, setUser] = useState({})
+  const [orderRef, setOrderRef] = useState()
+  const [products, setProducts] = useState([])
+  const [userRole, setUserRole] = useState("")
+  // const [cart, setCart] = useState([])
+  // const [cartCount, setCartCount] = useState(0)
+  const [productQuantity, setProductQuantity] = useState(1)
+  // const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [productToEdit, setProductToEdit] = useState("")
+  const [allOrders, setAllOrders] = useState([])
+  const [filterUSerOrders, setFilterUserOrders] = useState([])
+  
+  const [sortedPopular, setSortedPopular] = useState([])
+  // const [cartItemQuant, setCartItemQuant] = useState({})
+  // const [cartDisplayArr, setCartDisplayArr] = useState([])
+
+  const [query, setQuery] = useState("")
+  // Product Detail
+  // const [currentProduct, setCurrentProduct] = useState()
+  // const [isDetail, setIsDetail] = useState(false)
 
   useEffect(() => {
     console.log("useEffect triggered")
+    loadProductList()
+    
     setCartCount(cart.length)
     console.log(cartCount)
     let token = localStorage.getItem("token")
@@ -49,9 +77,7 @@ export default function App() {
 
     if(token != null){
       let user = jwt_decode(token)
-      console.log("USER NAME:", user.user.name)
-      console.log("USER ROLE:", user.user.role)
-      console.log(user.user)
+      console.log(`Token is valid; logged in as [${user.user.name}] with ${user.user.role} privileges. Full object :`, [user.user])
 
       if(user){
         setIsAuth(true)
@@ -63,31 +89,13 @@ export default function App() {
         setIsAuth(false)
       }
     }
+
     
-  }, [cart, cartCount])
+    
+  }, [cart, cartCount, mostPopular])
+
 
   
-
-  const [isAuth, setIsAuth] = useState(false)
-  const [user, setUser] = useState({})
-  // 
-  const [products, setProducts] = useState([])
-  const [userRole, setUserRole] = useState("")
-  // const [cart, setCart] = useState([])
-  // const [cartCount, setCartCount] = useState(0)
-  const [productQuantity, setProductQuantity] = useState(1)
-  // const [message, setMessage] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [productToEdit, setProductToEdit] = useState("")
-  // const [cartItemQuant, setCartItemQuant] = useState({})
-  // const [cartDisplayArr, setCartDisplayArr] = useState([])
-
-
-  // Product Detail
-  // const [currentProduct, setCurrentProduct] = useState()
-  // const [isDetail, setIsDetail] = useState(false)
-
   const addNewsletterEmail = (email) => {
     // The url is the api and the recipe post comma is the body 
     Axios.post("newsletter", email)
@@ -120,68 +128,74 @@ export default function App() {
       setErrorMessage("User registration failed!")
     })
   }
-
-  // const increaseQuantity = (e) => {
-  //   console.log("increment button clicked")
-  //   setProductQuantity(productQuantity + 1)
-  // }
-  // const decreaseQuantity = (e) => {
-  //   console.log("decrement button clicked")
-  //   if(productQuantity > 1){
-  //     setProductQuantity(productQuantity - 1)
-  //   }
-  // }
-
-  const handleProductQuantity = (quantity) => {
-    console.log("hello")
-    console.log(quantity)
-    setProductQuantity(quantity)
-    // console.log(productQuantity)
-  }
-
   
-  const addToCart = (product) => {
-    console.log("button clicked")
-    console.log(product)
-    console.log(productQuantity)
-    // setCartItemQuant(cartItemQuant[product._id]=productQuantity)
-    // console.log(cartItemQuant[product._id])
-    // let tempCart = []
-    for (let i = 1; i <= productQuantity; i++){
-      setCart(cart => [...cart, product])
-    }
-    // setCart(cart.concat(product))
-    // setCart(cart => [...cart, product])
-    setCartCount(cart.length)
-    setProductQuantity(1)
-    console.log(cart)
-    console.log(cartCount)
-  }
+  // const increaseQuantity = (e) => {
+    //   console.log("increment button clicked")
+    //   setProductQuantity(productQuantity + 1)
+    // }
+    // const decreaseQuantity = (e) => {
+      //   console.log("decrement button clicked")
+      //   if(productQuantity > 1){
+        //     setProductQuantity(productQuantity - 1)
+        //   }
+        // }
+
+        const handleProductQuantity = (quantity) => {
+          console.log("hello")
+          console.log(quantity)
+          setProductQuantity(quantity)
+          // console.log(productQuantity)
+        }
+        
+        
+        const addToCart = (product) => {
+          console.log("button clicked")
+          console.log(product)
+          console.log(productQuantity)
+          // setCartItemQuant(cartItemQuant[product._id]=productQuantity)
+          // console.log(cartItemQuant[product._id])
+          // let tempCart = []
+          for (let i = 1; i <= productQuantity; i++){
+            setCart(cart => [...cart, product])
+          }
+          // setCart(cart.concat(product))
+          // setCart(cart => [...cart, product])
+          setCartCount(cart.length)
+          setProductQuantity(1)
+          console.log(cart)
+          console.log(cartCount)
+        }
+
+
   const handleRemoveFromCart = (deletedItem) => {
     console.log(deletedItem._id)
     const updatedCart = cart.filter(element => element._id !== deletedItem._id)
     // setCartDisplayArr(cartDisplayArr.filter(element => element._id !== deletedItem._id))
     console.log(updatedCart)
     setCart(updatedCart)
-}
-
+  }
+  
   const loadProductList = () => {
     Axios.get("product/index")
     .then((response) => {
-        console.log(response)
+        console.log(response.data.product)
         // Setting state here:
         setProducts(response.data.product)
     })
     .catch((error) => {
-        console.log(error)
+      console.log(error)
     })
   }
-
+  
   const handleDelete = (id) => {
     console.log(id)
     console.log("clicked")
     
-    Axios.delete(`product/delete?id=${id}`)
+    Axios.delete(`product/delete?id=${id}`, {
+      headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
     .then((response) => {
         console.log(response)
         console.log("Product record successfully deleted.")
@@ -196,7 +210,11 @@ export default function App() {
 const editGet = (id) => {
   console.log("Edit GET MAIN")
   console.log(id)
-  Axios.get(`product/edit?id=${id}`)
+  Axios.get(`product/edit?id=${id}`, {
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  })
   .then(response => {
     var product = response.data.product
     console.log("GET PRODUCT", product)
@@ -224,33 +242,65 @@ const editGet = (id) => {
     // e.preventDefault()
     console.log(cartItems)
     console.log("makecart working")
-    let idArr = []
-    cartItems.forEach(element => {
-      idArr.push(element._id)
-    });
-    console.log(idArr)
-    var dataObj = {user : user.user.id, status : "active", product : idArr }
-    console.log(dataObj)
-    Axios.post("cart", dataObj)
-    .then(response => {
-      console.log(response)
-      navigation("/checkout")
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    if(isAuth){
+      let idArr = []
+      cartItems.forEach(element => {
+        idArr.push(element._id)
+      });
+      console.log(idArr)
+      var dataObj = {user : user.user.id, status : "active", product : idArr }
+      console.log(dataObj)
+      Axios.post("cart", dataObj)
+      .then(response => {
+        console.log(response)
+        navigation("/checkout")
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    } else {
+      navigation("/login")
+    }
   }
 
+  const filmArray = products.filter(products => products.productSourceType === "Film/TV")
+  const videoArray = products.filter(products => products.productSourceType === "Video Game")
+  const originalArray = products.filter(products => products.productSourceType === "Original Work")
 
+  console.log(filmArray)
 
   const allProducts = products.map((products, index) => (
     
-    <div key={index}>
+    <div className="productCard" key={index}>
 
-      <Product  products={products} addToCart={addToCart} productQuantity={productQuantity} handleProductQuantity={handleProductQuantity} />
+      <Product  products={products} addToCart={addToCart} productQuantity={productQuantity} handleProductQuantity={handleProductQuantity} cart={cart} />
       
     </div>
 
+  ))
+
+  const filmProducts = filmArray.map((products, index) => (
+    <div key={index}>
+
+    <Product  products={products} addToCart={addToCart} productQuantity={productQuantity} handleProductQuantity={handleProductQuantity} cart={cart} />
+    
+    </div>
+  ))
+
+  const videoProducts = videoArray.map((products, index) => (
+    <div key={index}>
+
+    <Product  products={products} addToCart={addToCart} productQuantity={productQuantity} handleProductQuantity={handleProductQuantity} cart={cart} />
+    
+    </div>
+  ))
+
+  const originalProducts = originalArray.map((products, index) => (
+    <div key={index}>
+
+    <Product  products={products} addToCart={addToCart} productQuantity={productQuantity} handleProductQuantity={handleProductQuantity} cart={cart} />
+    
+    </div>
   ))
 
   const allStock = products.map((product, index) => (
@@ -309,59 +359,6 @@ const editGet = (id) => {
       }, 3000);
   }
 
-//   function detailView(id){
-//     console.log("it's me over here!")
-//     Axios.get(`product/detail?id=${id}`)
-//     .then(response => {
-  
-
-  
-
-  // const addProduct = (product) => {
-  //   console.log("Add Product")
-  //   Axios.post("product/add", product)
-  //   .then(response => {
-  //     console.log(response.data)
-  //     console.log("Product added successfully.")
-  //     // loadProductList();
-  //   })
-  //   .catch((error) => {
-  //     console.log("Error adding product.")
-  //     console.log(error)
-  //   })
-  // }
-
-//   return (
-//     <div>
-//       <Router>
-//         <nav>
-//           { isAuth ? (
-//             <div>
-//               {user ? `Welcome, ${user.user.name}!` : "null"} &nbsp;
-//               <Link to="/manage">{userRole === "seller" ? "Seller Dashboard" : "My Orders"}</Link> &nbsp;
-//               <Link to="/">Home</Link> &nbsp;
-//               <Link to="/index">Products</Link> &nbsp;
-//               <Link to="/logout" onClick={onLogoutHandler}>Log Out</Link> &nbsp;
-//               <Link to="/cart" onClick={loadCartArray}> <BsCart4> </BsCart4> </Link> <Badge bg="secondary"> {cartCount} </Badge> &nbsp;
-//             </div>
-//           ):(
-//             <div>
-//               <Link to="/">Home</Link> &nbsp;
-//               <Link to="/index">Products</Link> &nbsp;
-//               <Link to="/signup">Sign Up</Link> &nbsp;
-//               <Link to="/login">Log In</Link> &nbsp;
-//               <Link to="/cart" onClick={() => {loadCartArray(cart)}}> <BsCart4> </BsCart4> </Link> <Badge bg="secondary"> {cartCount} </Badge> &nbsp;
-
-// //         console.log(response.data)
-// //         var productDetail = response.data
-// //         setIsDetail(true)
-// //         setCurrentProduct(productDetail)
-// //     })
-// //     .catch(error => {
-//         console.log(error)
-//         console.log("Error loading recipe information")
-//     })
-// }
 
 
   const sucMessage = successMessage ? (
@@ -373,7 +370,18 @@ const editGet = (id) => {
     
   ): null;
 
-
+  // const test = products.filter(post => {
+  //   if (query === '') {
+  //     return post;
+  //   } else if (post.productName.toLowerCase().includes(query.toLowerCase())) {
+  //     return post;
+  //   }
+  // }).map((post) => (
+  //   <div key={post._id}>
+  //     <p>{post.productName}</p>
+  //     <p>{post.productPrice}</p>
+  //   </div>
+  // ))
 
 
 
@@ -388,28 +396,28 @@ const editGet = (id) => {
 
     
       {/* React Bootstrap Nav Bar*/}
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="navbar-bg"  sticky="top">
       <Container>
 
 
 
         
-        <Navbar.Brand href="#home">Bootleg Tapes</Navbar.Brand>
+        <Navbar.Brand href="/"><Image src={logo} height="50px" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         <Navbar.Collapse className="justify-content-end" >
-        <Nav>
+        <Nav className="nav-style">
           { isAuth ? (
           <>          
           <Nav.Link as={Link} to="/"> Home</Nav.Link>
           <Nav.Link as={Link} to="/index"> Products</Nav.Link>
           <Nav.Link as={Link} to="/logout" onClick={onLogoutHandler}>Logout</Nav.Link>
           <Nav.Link as={Link} to="/manage"> 
-          <Navbar.Text>
+          <Navbar.Text className="dash-link">
           {userRole === "seller" ? "Seller Dashboard" : "My Orders"}
           </Navbar.Text>
           </Nav.Link>
-          <Navbar.Text>{`Signed in as: ${user.user.name}!`}</Navbar.Text>
-          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Nav.Link as={Link} to="/cart"><BsCart4 size={26}> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Navbar.Text>{`Welcome, ${user.user.name}!`}</Navbar.Text>
           </>
           ):(
           <>
@@ -417,7 +425,7 @@ const editGet = (id) => {
           <Nav.Link as={Link} to="/"> Home</Nav.Link>
           <Nav.Link as={Link} to="/signup"> Signup</Nav.Link>
           <Nav.Link as={Link} to="/index"> Products</Nav.Link>
-          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>          
           </>
           )}
           </Nav>
@@ -428,15 +436,20 @@ const editGet = (id) => {
      {errMessage}
         <div>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home loadProductList={loadProductList} products={products} sortedPopular={sortedPopular} setSortedPopular={setSortedPopular} />} />
             <Route path="/signup" element={<Signup register={registerHandler} />} />
-            <Route path="/index" element={<ProductList allProducts={allProducts} setProducts={setProducts} addToCart={addToCart} loadProductList={loadProductList}/>} />
+            <Route path="/index" element={<ProductList allProducts={allProducts} filmProducts={filmProducts} videoProducts={videoProducts} originalProducts={originalProducts} setProducts={setProducts} addToCart={addToCart} loadProductList={loadProductList} products={products}/>} />
             <Route path="/login" element={<Login login={loginHandler} role={userRole}/>} />
-            <Route path="/manage" element={<Dash role={userRole} allStock={allStock} products={products} setProducts={setProducts} loadProductList={loadProductList} sucMessage={sucMessage} setSuccess={setSuccessMessage} error={errMessage} setError={setErrorMessage}/>} />
+            <Route path="/manage" element={<Dash user={user} role={userRole} allStock={allStock} products={products} allOrders={allOrders} setAllOrders={setAllOrders} setProducts={setProducts} loadProductList={loadProductList} sucMessage={sucMessage} setSuccess={setSuccessMessage} error={errMessage} setError={setErrorMessage}/>} />
             <Route path="/cart" element={<Cart cart={cart} makeCart={makeCart} productQuantity={productQuantity} addToCart={addToCart} handleRemoveFromCart={handleRemoveFromCart} handleProductQuantity={handleProductQuantity}/>} />
-            <Route path="/checkout" element={<Checkout cart={cart} user={user} />} />
+            <Route path="/checkout" element={<Checkout cart={cart} user={user} orderRef={orderRef} setOrderRef={setOrderRef} allOrders={allOrders} setAllOrders={setAllOrders} setCartCount={setCartCount} cartCount={cartCount}/>} />
+            <Route path="/confirmation" element={<OrderConfirmation orderRef={orderRef} setOrderRef={setOrderRef}/>} />
           </Routes>
         </div>
+
+
+
+
 
 
         <Footer addNewsletterEmail={addNewsletterEmail}/>

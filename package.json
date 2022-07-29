@@ -11,6 +11,7 @@
     "jquery": "^3.6.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
+    "react-audio-player": "^0.17.0",
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -24,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "mv build ../project-04/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

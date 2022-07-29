@@ -19,6 +19,7 @@ export default function Cart(props) {
     
     const [decreaseQuantity, setDecreaseQuantity] = useState(false)
     const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+    let subtotalPrice = 0
 
     // const cartDisplayArray = Array.from(new Set(props.cart))
 
@@ -67,7 +68,7 @@ export default function Cart(props) {
     
           <Card key={key} style={{width: '30rem'}} >
               <Col style={{width: '10rem'}}>
-              <Card.Img src={item.productImageUrl} style={{width: '8rem'}} />
+              <Card.Img src={item.productImageUrls[0]} style={{width: '8rem'}} />
               </Col>
                 <Col>
                <Card.Body style={{width: '20rem'}}>
@@ -88,14 +89,21 @@ export default function Cart(props) {
     // const loadCartArray = () => {
     //     console.log(props.cartItems)
     // }
-
+    const subtotalPriceCalc = () => {
+        props.cart.forEach(item => {
+            console.log(item.productPrice)
+            subtotalPrice += item.productPrice
+        })
+        return subtotalPrice
+    }
+    console.log(subtotalPriceCalc())
   
   return (
     <>
         <h1> In your cart: </h1>
-
             {cartItems}
-            <button onClick={() => props.makeCart(props.cart)}>Confirm Cart</button>
+            <h4> Subtotal: £{subtotalPrice} </h4>
+            <Button variant="primary" onClick={() => props.makeCart(props.cart)}>Go to Checkout</Button>
      
         
     </>

@@ -131,6 +131,11 @@ const handleUrlChange = (e) => {
                 <Form.Control id='2' onChange={handleUrlChange} defaultValue={props.product.productImageUrls[2]}></Form.Control>
                 <Form.Control id='3' onChange={handleUrlChange} defaultValue={props.product.productImageUrls[3]}></Form.Control>
             </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Product Audio</Form.Label>
+            <Form.Control name="productAudio" onChange={handleChange} defaultValue={props.product.productAudio}></Form.Control>
+          </Form.Group>
           
           <Button variant="primary" onClick={(e) => handleSubmit(e)}>Update Product</Button>
           

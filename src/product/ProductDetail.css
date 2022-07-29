@@ -6,6 +6,9 @@
     /* background-color: red; */
 }
 
+
+
+
 .mainImg {
     display: flex;
     justify-content: center;
@@ -53,6 +56,39 @@
     align-items: stretch;
     margin-left: 20px;
     /* background-color: blue; */
+}
+
+@media (max-width: 996px) {
+
+    .modal-content{
+      height: 1300px;
+    
+    }
+    
+    .detailModalFlex{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: start;
+      
+    
+    }
+    
+    .detailsInfo{
+        padding-top: 20px;
+        width: 100%;
+        padding-right: 10%;
+        /* width: 300px;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch; */
+    } 
+
+    .vr{
+        display: none;
+    }
+    
+    
 }
 
 /* .audioPlayer {
@@ -107,7 +143,31 @@
 }
 
 .numInput {
-    height: 38px;
-    width: 50px;
+    height: 33px;
+    width: 33px;
     text-align: center;
+
 }
+
+
+/* Audio Player */
+
+#audio {
+    margin-bottom: 30px;
+}
+
+audio::-webkit-media-controls-panel {
+
+    margin: 10px;
+
+}
+
+
+audio::-webkit-media-controls-play-button {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10%; 
+}
+
+
+
+

@@ -1,6 +1,11 @@
 
 body{
     position: relative;
+    color: black;
+}
+
+h2 {
+    color: white;
 }
 
 /* Position absolute and bottom only works if body set to position relative - i thought it was inherently relative... */
@@ -9,8 +14,10 @@ body{
     bottom: 0;
     color: lightgray;
     width: 100%;
-    background-color: #212529;
-    height: 10rem;
+    background-color: #00BFC3;
+    height: 15rem;
+    padding-top: 10px;
+
       
 }
 
@@ -20,7 +27,7 @@ body{
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
-    
+    background-color: #00BFC3;
 
     
 }
@@ -35,10 +42,195 @@ body{
 
 .footer > .footer-heading > a {
     color: white;
+    font-weight: bold;
     text-decoration: none;
 }
 
 .clear { 
     clear: both; 
-    height: 12rem; 
+    height: 17rem; 
 }
+
+
+.footer-heading a:hover {
+color: #FF2273;
+transition: 0.3s ease-out;
+    
+}
+
+.EmailTitle{
+    /* margin-bottom: 23px; */
+}
+
+.emailButton{
+    margin-bottom: 2rem;
+
+}
+
+
+.emailInput {
+    width: 250px;
+    height: 40px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.emailInput::placeholder{
+    color: grey;
+    font-weight: bolder;
+}
+
+.emailButton {
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #FF2273;
+    outline: none;
+    border: none;
+    color: #F8DC38;
+    font-size: 1rem;
+    font-weight: bolder;
+
+}
+
+
+.emailButton:hover{
+    cursor: pointer;
+    background-color: #F8DC38;
+    transition: 0.3s ease-out;
+    color: #FF2273
+}
+
+.email-container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media (max-width: 1237px) {
+
+    .footer-container {
+
+        height: 20rem;
+        
+
+        
+          
+    }
+
+    .clear { 
+        clear: both; 
+        height: 22rem; 
+    }
+
+    
+    .footer{
+  
+        display: flex;
+  
+        align-items: center;
+   
+    }
+
+    .emailInput {
+        text-align: center;
+    }
+
+    /* .footer-heading{
+        margin-right: 0;
+    } */
+
+    .EmailTitle{
+        text-align: center;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+@media (max-width: 1458px) {
+
+    .footer-container{
+        height: 21rem;
+    }
+
+    .clear {
+        height: 26rem;
+    }
+
+
+
+}
+
+
+@media (max-width: 1225px) {
+
+    .footer-heading{
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+
+    .EmailTitle{
+
+        text-align: center;
+    }
+
+}
+
+
+
+@media (max-width: 750px) {
+
+    .footer-container {
+        display: flex;
+        justify-content: center;
+        height: 30rem;
+    }
+    .clear { 
+        clear: both; 
+        height: 32rem; 
+    }
+    .footer{
+text-align: center;
+
+   
+    }
+
+    .footer-heading{
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+
+    h2{
+        font-size: 20px;
+    }
+
+}
+
+
+
+@media (max-width: 457px) {
+
+    .footer-container {
+
+        height: 35rem;
+    }
+    .clear { 
+        clear: both; 
+        height: 50rem; 
+    }
+
+}
+
+

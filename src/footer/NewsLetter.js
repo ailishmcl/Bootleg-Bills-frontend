@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './footer.css'
 
 export default function NewsLetter(props) {
   const [newSignup, setNewSignup] = useState({});
@@ -26,15 +27,15 @@ export default function NewsLetter(props) {
 
 
   return (
-    <div>
-      
+    <div className="email-container">
+    <h2 className="EmailTitle" >Newsletter Signup</h2>
+    <hr></hr>
     <form onSubmit={handleClick} id="clear-form">
 
-        <div>
-            <input type="text" name="emailAddress" placeholder="Newsletter Sign Up" onChange={handleChange}></input>
-        </div>
+        <input className="emailInput" type="text" name="emailAddress" placeholder="bill@bootleg.com" onChange={handleChange}></input>
+ 
 
-        <input type="submit" value="Signup" onClick={(e) => {handleClick(e)}}></input>
+        <input className="emailButton" type="submit" value="Signup" onClick={(e) => {handleClick(e)}}></input>
     
     </form>
     

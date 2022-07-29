@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
+import Switch from 'react-switch'
 
 
 export default function OrderAddressForm(props) {
 
-    const handleSubmit = () => {
-        console.log("addresses added")
+    const [checked, setChecked] = useState(true)
+    console.log(props.sameAddress)
+    // const handleSubmit = () => {
+    //     console.log("addresses added")
+    // }
+
+    const handleToggle = () => {
+        props.setSameAddress(!props.sameAddress)
+        setChecked(!checked)
+        console.log(checked, props.sameAddress)
     }
     
   return (
@@ -37,34 +46,38 @@ export default function OrderAddressForm(props) {
                 <Form.Label> Postcode: </Form.Label>
                 <Form.Control name="postcode" onChange={props.handleBillingChange}/> 
             </Form.Group>
-            <h3> Enter Shipping Address: </h3>
+            <h3> Shipping Address: </h3>
 
             <Form.Group>
-                <Form.Label> Address Line 1: </Form.Label>
-                <Form.Control name="lineOne" onChange={props.handleShippingChange} /> 
+                <Form.Label> Use same shipping address? </Form.Label>
+                <Switch className="switch" onChange={handleToggle} checked={checked}/>
+            </Form.Group>
+           
+            <Form.Group>
+                <Form.Label> {!props.sameAddress ? ("Address Line 1:") : ("")} </Form.Label>
+                <Form.Control name="lineOne" type={props.sameAddress ? ("hidden") : ("text")} onChange={props.handleShippingChange} /> 
             </Form.Group>
 
             <Form.Group>
-                <Form.Label> Address Line 2: </Form.Label>
-                <Form.Control name="lineTwo" onChange={props.handleShippingChange}/> 
+                <Form.Label> {!props.sameAddress ? ("Address Line 2:") : ("")} </Form.Label>
+                <Form.Control name="lineTwo" type={props.sameAddress ? ("hidden") : ("text")} onChange={props.handleShippingChange}/> 
             </Form.Group>
 
             <Form.Group>
-                <Form.Label> City: </Form.Label>
-                <Form.Control name="city" onChange={props.handleShippingChange}/> 
+                <Form.Label> {!props.sameAddress ? ("City:") : ("")} </Form.Label>
+                <Form.Control name="city" type={props.sameAddress ? ("hidden") : ("text")} onChange={props.handleShippingChange}/> 
             </Form.Group>
 
             <Form.Group>
-                <Form.Label> Country: </Form.Label>
-                <Form.Control name="country" onChange={props.handleShippingChange}/> 
+                <Form.Label> {!props.sameAddress ? ("Country:") : ("")} </Form.Label>
+                <Form.Control name="country" type={props.sameAddress ? ("hidden") : ("text")} onChange={props.handleShippingChange}/> 
             </Form.Group>
 
             <Form.Group>
-                <Form.Label> Postcode: </Form.Label>
-                <Form.Control name="postcode" onChange={props.handleShippingChange}/> 
+                <Form.Label> {!props.sameAddress ? ("Postcode:") : ("")} </Form.Label>
+                <Form.Control name="postcode" type={props.sameAddress ? ("hidden") : ("text")} onChange={props.handleShippingChange}/> 
             </Form.Group>
-
-            <Button variant="primary" onClick={(e) => handleSubmit(e)}> Submit Address Details </Button>
+          
         </Container>
     </div>
   )
