@@ -32,7 +32,7 @@ export default function NewsLetter(props) {
     <hr></hr>
     <form onSubmit={handleClick} id="clear-form">
 
-        <input className="emailInput" type="text" name="emailAddress" placeholder="Newsletter Sign Up" onChange={handleChange}></input>
+        <input className="emailInput" type="text" name="emailAddress" placeholder="bill@bootleg.com" onChange={handleChange}></input>
  
 
         <input className="emailButton" type="submit" value="Signup" onClick={(e) => {handleClick(e)}}></input>

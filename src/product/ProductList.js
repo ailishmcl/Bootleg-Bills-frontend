@@ -8,11 +8,12 @@ import Button from 'react-bootstrap/Button'
 
 
 
+
 export default function ProductList(props) {
 
     const [showModal, setShowModal] = useState(false)
     const [filter, setFilter] = useState("all")
-
+    // const [query, setQuery] = useState("")
     useEffect(() => {
         loadProductList()
     }, [])
@@ -49,16 +50,36 @@ export default function ProductList(props) {
       setFilter(e.target.name)
     }
 
+    // const test = props.products.filter(post => {
+    //   if (query === '') {
+    //     return post;
+    //   } else if (post.productName.toLowerCase().includes(query.toLowerCase())) {
+    //     return post;
+    //   }
+    // }).map((post) => (
+    //   <div key={post._id}>
+    //     <p>{post.productName}</p>
+    //     <p>{post.productPrice}</p>
+    //   </div>
+    // ))
+
+
 
   return (
-    <div >
-          <ButtonGroup id="shopFilter">
+    <div className="product-body">
+
+
+        <div className="filter-container">
+
+          <ButtonGroup id="shopFilter" className="filter" >
           <Button variant="primary" name="All" onClick={(e) => {handleFilterClick(e)}}>All</Button>
           <Button variant="primary" name="Film/TV" onClick={(e) => {handleFilterClick(e)}}>Film/TV</Button>
           <Button variant="primary" name="Video Game" onClick={(e) => {handleFilterClick(e)}}>Video Game</Button>
           <Button variant="primary" name="Original Work" onClick={(e) => {handleFilterClick(e)}}>Original Work</Button>
           </ButtonGroup>
-        &nbsp;
+          &nbsp;
+     
+        </div>
         <Container className="d-flex"  >
 
 
@@ -70,6 +91,8 @@ export default function ProductList(props) {
           </Row> 
         </Container>
        
+
+
 
 
 

@@ -22,7 +22,11 @@ export default function Checkout(props) {
     useEffect(() => {
         setCheckoutItems(Array.from(new Set(props.cart)))
 
-        Axios.get("orders/index")
+        Axios.get("orders/index", {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+          })
         .then((response) => {
             console.log(response.data.length)
             let orderRefNo = String(response.data.length + 1).padStart(4, '0')
@@ -65,7 +69,11 @@ export default function Checkout(props) {
         console.log(quantities)
         quantities.forEach(product => {
             const newStockLevel = {"_id": product._id, "productStock": product.productStock - product.count}
-            Axios.put('product/update', newStockLevel)
+            Axios.put('product/update', newStockLevel, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
             .then(response => {
                 console.log(response)
             })
@@ -156,6 +164,8 @@ export default function Checkout(props) {
             console.log("ordere added successfully")
             decreaseStock()
             navigation("/confirmation")
+            // props.setCart([])
+            // console.log(props.cart)    
         })
         .catch((error) => {
             console.log(error)

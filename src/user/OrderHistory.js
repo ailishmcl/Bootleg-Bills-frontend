@@ -46,26 +46,6 @@ export default function OrderHistory(props) {
         })
     }
 
-    // const getOrders = () => {
-    //     let buyerOrders = []
-    //     Axios.get("orders/index")
-    //     .then((response) => {
-    //         console.log(response.data)
-    //         console.log(props.user.user.id)
-    //         let userId = props.user.user.id
-    //         response.data.forEach(order => {
-    //             if(order.user === userId){
-    //                 buyerOrders.push(order)
-    //             }
-    //         });
-    //         console.log(buyerOrders)
-    //         props.setAllOrders(response.data)
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
-
     const handleOrderView = (e) => {
         const orderId = e.target.value
         Axios.get(`orders/detail?id=${orderId}`)
@@ -102,7 +82,7 @@ export default function OrderHistory(props) {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <OrderDetails {...currentOrder} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder} products={props.products}/>
+            <OrderDetails {...currentOrder} user={props.user} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder} products={props.products}/>
             </Modal.Body>
         </Modal>
 

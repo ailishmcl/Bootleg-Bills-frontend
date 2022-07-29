@@ -1,6 +1,11 @@
 
 body{
     position: relative;
+    color: black;
+}
+
+h2 {
+    color: white;
 }
 
 /* Position absolute and bottom only works if body set to position relative - i thought it was inherently relative... */
@@ -9,9 +14,10 @@ body{
     bottom: 0;
     color: lightgray;
     width: 100%;
-    background-color: #212529;
+    background-color: #00BFC3;
     height: 15rem;
     padding-top: 10px;
+
       
 }
 
@@ -21,7 +27,7 @@ body{
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
-    
+    background-color: #00BFC3;
 
     
 }
@@ -36,6 +42,7 @@ body{
 
 .footer > .footer-heading > a {
     color: white;
+    font-weight: bold;
     text-decoration: none;
 }
 
@@ -46,7 +53,7 @@ body{
 
 
 .footer-heading a:hover {
-color: red;
+color: #FF2273;
 transition: 0.3s ease-out;
     
 }
@@ -73,27 +80,29 @@ transition: 0.3s ease-out;
 }
 
 .emailInput::placeholder{
-    color: #5e5e5e;
+    color: grey;
+    font-weight: bolder;
 }
 
 .emailButton {
     width: 100px;
     height: 40px;
     border-radius: 4px;
-    background-color: rgb(181, 51, 51);
+    background-color: #FF2273;
     outline: none;
     border: none;
-    color: #fff;
+    color: #F8DC38;
     font-size: 1rem;
-
+    font-weight: bolder;
 
 }
 
 
 .emailButton:hover{
     cursor: pointer;
-    background-color: #204c97;
+    background-color: #F8DC38;
     transition: 0.3s ease-out;
+    color: #FF2273
 }
 
 .email-container{
@@ -108,7 +117,6 @@ transition: 0.3s ease-out;
     .footer-container {
 
         height: 20rem;
-        /* display: flex; */
         
 
         
@@ -138,9 +146,7 @@ transition: 0.3s ease-out;
     } */
 
     .EmailTitle{
-        /* margin-bottom: 23px; */
-
-            text-align: center;
+        text-align: center;
     }
 
 
@@ -148,23 +154,43 @@ transition: 0.3s ease-out;
 
 }
 
+
+
+
+
+
+@media (max-width: 1458px) {
+
+    .footer-container{
+        height: 21rem;
+    }
+
+    .clear {
+        height: 26rem;
+    }
+
+
+
+}
+
+
 @media (max-width: 1225px) {
+
     .footer-heading{
         margin-right: 1rem;
         margin-left: 1rem;
     }
 
     .EmailTitle{
-        /* margin-bottom: 23px; */
 
-            text-align: center;
+        text-align: center;
     }
 
 }
 
 
 
-@media (max-width: 721px) {
+@media (max-width: 750px) {
 
     .footer-container {
         display: flex;
@@ -202,7 +228,7 @@ text-align: center;
     }
     .clear { 
         clear: both; 
-        height: 32rem; 
+        height: 50rem; 
     }
 
 }

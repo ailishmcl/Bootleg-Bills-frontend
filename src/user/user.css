@@ -1,6 +1,7 @@
 .userType {
     margin-top: 5px;
     display: flex;
+    flex-direction: row;
     align-items: center;
 }
 
@@ -11,4 +12,23 @@
 
 .verify-seller {
     margin-left: 20px;
+}
+
+.auth-form { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.not-a-user {
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    margin-top: 2rem;
+}
+
+.auth-input {
+    height: 30px;
 }

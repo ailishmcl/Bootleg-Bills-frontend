@@ -18,14 +18,14 @@ import Footer from './footer/Footer'
 import NewsLetter from './footer/NewsLetter'
 import Checkout from './cart/Checkout' 
 import OrderConfirmation from './cart/OrderConfirmation'
-
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image'
-import logo from './product/images/logo.png'
+import logo from './product/images/nav_logo_new.png'
 
 // const logo = './product/images/logo.png'
 
@@ -56,12 +56,12 @@ export default function App() {
   const [productToEdit, setProductToEdit] = useState("")
   const [allOrders, setAllOrders] = useState([])
   const [filterUSerOrders, setFilterUserOrders] = useState([])
-  const [popular, setPopular] = useState({})
+  
   const [sortedPopular, setSortedPopular] = useState([])
   // const [cartItemQuant, setCartItemQuant] = useState({})
   // const [cartDisplayArr, setCartDisplayArr] = useState([])
 
-
+  const [query, setQuery] = useState("")
   // Product Detail
   // const [currentProduct, setCurrentProduct] = useState()
   // const [isDetail, setIsDetail] = useState(false)
@@ -94,17 +94,7 @@ export default function App() {
     
   }, [cart, cartCount, mostPopular])
 
-  // ====================== PART OF POPULARITY GET ======================= //  
 
-  const getProduct = (productId) => {
-    return Axios.get(`product/detail?id=${productId}`);
-  }
-  
-  const getOrder = () => {
-    return Axios.get('orders/index');
-  }
-
-  // ====================== PART OF POPULARITY GET ======================= //
   
   const addNewsletterEmail = (email) => {
     // The url is the api and the recipe post comma is the body 
@@ -168,13 +158,15 @@ export default function App() {
           for (let i = 1; i <= productQuantity; i++){
             setCart(cart => [...cart, product])
           }
-    // setCart(cart.concat(product))
-    // setCart(cart => [...cart, product])
-    setCartCount(cart.length)
-    setProductQuantity(1)
-    console.log(cart)
-    console.log(cartCount)
-  }
+          // setCart(cart.concat(product))
+          // setCart(cart => [...cart, product])
+          setCartCount(cart.length)
+          setProductQuantity(1)
+          console.log(cart)
+          console.log(cartCount)
+        }
+
+
   const handleRemoveFromCart = (deletedItem) => {
     console.log(deletedItem._id)
     const updatedCart = cart.filter(element => element._id !== deletedItem._id)
@@ -199,7 +191,11 @@ export default function App() {
     console.log(id)
     console.log("clicked")
     
-    Axios.delete(`product/delete?id=${id}`)
+    Axios.delete(`product/delete?id=${id}`, {
+      headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
     .then((response) => {
         console.log(response)
         console.log("Product record successfully deleted.")
@@ -214,7 +210,11 @@ export default function App() {
 const editGet = (id) => {
   console.log("Edit GET MAIN")
   console.log(id)
-  Axios.get(`product/edit?id=${id}`)
+  Axios.get(`product/edit?id=${id}`, {
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  })
   .then(response => {
     var product = response.data.product
     console.log("GET PRODUCT", product)
@@ -242,21 +242,25 @@ const editGet = (id) => {
     // e.preventDefault()
     console.log(cartItems)
     console.log("makecart working")
-    let idArr = []
-    cartItems.forEach(element => {
-      idArr.push(element._id)
-    });
-    console.log(idArr)
-    var dataObj = {user : user.user.id, status : "active", product : idArr }
-    console.log(dataObj)
-    Axios.post("cart", dataObj)
-    .then(response => {
-      console.log(response)
-      navigation("/checkout")
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    if(isAuth){
+      let idArr = []
+      cartItems.forEach(element => {
+        idArr.push(element._id)
+      });
+      console.log(idArr)
+      var dataObj = {user : user.user.id, status : "active", product : idArr }
+      console.log(dataObj)
+      Axios.post("cart", dataObj)
+      .then(response => {
+        console.log(response)
+        navigation("/checkout")
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    } else {
+      navigation("/login")
+    }
   }
 
   const filmArray = products.filter(products => products.productSourceType === "Film/TV")
@@ -366,7 +370,18 @@ const editGet = (id) => {
     
   ): null;
 
-
+  // const test = products.filter(post => {
+  //   if (query === '') {
+  //     return post;
+  //   } else if (post.productName.toLowerCase().includes(query.toLowerCase())) {
+  //     return post;
+  //   }
+  // }).map((post) => (
+  //   <div key={post._id}>
+  //     <p>{post.productName}</p>
+  //     <p>{post.productPrice}</p>
+  //   </div>
+  // ))
 
 
 
@@ -381,28 +396,28 @@ const editGet = (id) => {
 
     
       {/* React Bootstrap Nav Bar*/}
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+    <Navbar collapseOnSelect expand="lg" className="navbar-bg"  sticky="top">
       <Container>
 
 
 
         
-        <Navbar.Brand href="#home"><Image src={logo} height="50px" /></Navbar.Brand>
+        <Navbar.Brand href="/"><Image src={logo} height="50px" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         <Navbar.Collapse className="justify-content-end" >
-        <Nav>
+        <Nav className="nav-style">
           { isAuth ? (
           <>          
           <Nav.Link as={Link} to="/"> Home</Nav.Link>
           <Nav.Link as={Link} to="/index"> Products</Nav.Link>
           <Nav.Link as={Link} to="/logout" onClick={onLogoutHandler}>Logout</Nav.Link>
           <Nav.Link as={Link} to="/manage"> 
-          <Navbar.Text>
+          <Navbar.Text className="dash-link">
           {userRole === "seller" ? "Seller Dashboard" : "My Orders"}
           </Navbar.Text>
           </Nav.Link>
-          <Navbar.Text>{`Signed in as: ${user.user.name}!`}</Navbar.Text>
-          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Nav.Link as={Link} to="/cart"><BsCart4 size={26}> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Navbar.Text>{`Welcome, ${user.user.name}!`}</Navbar.Text>
           </>
           ):(
           <>
@@ -410,7 +425,7 @@ const editGet = (id) => {
           <Nav.Link as={Link} to="/"> Home</Nav.Link>
           <Nav.Link as={Link} to="/signup"> Signup</Nav.Link>
           <Nav.Link as={Link} to="/index"> Products</Nav.Link>
-          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>
+          <Nav.Link as={Link} to="/cart"><BsCart4> </BsCart4> <Badge bg="secondary"> {cartCount} </Badge></Nav.Link>          
           </>
           )}
           </Nav>
@@ -421,13 +436,13 @@ const editGet = (id) => {
      {errMessage}
         <div>
           <Routes>
-            <Route path="/" element={<Home loadProductList={loadProductList} products={products} popular={popular} setPopular={setPopular} sortedPopular={sortedPopular} setSortedPopular={setSortedPopular} />} />
+            <Route path="/" element={<Home loadProductList={loadProductList} products={products} sortedPopular={sortedPopular} setSortedPopular={setSortedPopular} />} />
             <Route path="/signup" element={<Signup register={registerHandler} />} />
             <Route path="/index" element={<ProductList allProducts={allProducts} filmProducts={filmProducts} videoProducts={videoProducts} originalProducts={originalProducts} setProducts={setProducts} addToCart={addToCart} loadProductList={loadProductList} products={products}/>} />
             <Route path="/login" element={<Login login={loginHandler} role={userRole}/>} />
-            <Route path="/manage" element={<Dash user={user}role={userRole} allStock={allStock} products={products} allOrders={allOrders} setAllOrders={setAllOrders} setProducts={setProducts} loadProductList={loadProductList} sucMessage={sucMessage} setSuccess={setSuccessMessage} error={errMessage} setError={setErrorMessage}/>} />
+            <Route path="/manage" element={<Dash user={user} role={userRole} allStock={allStock} products={products} allOrders={allOrders} setAllOrders={setAllOrders} setProducts={setProducts} loadProductList={loadProductList} sucMessage={sucMessage} setSuccess={setSuccessMessage} error={errMessage} setError={setErrorMessage}/>} />
             <Route path="/cart" element={<Cart cart={cart} makeCart={makeCart} productQuantity={productQuantity} addToCart={addToCart} handleRemoveFromCart={handleRemoveFromCart} handleProductQuantity={handleProductQuantity}/>} />
-            <Route path="/checkout" element={<Checkout cart={cart} user={user} orderRef={orderRef} setOrderRef={setOrderRef} allOrders={allOrders} setAllOrders={setAllOrders}/>} />
+            <Route path="/checkout" element={<Checkout cart={cart} user={user} orderRef={orderRef} setOrderRef={setOrderRef} allOrders={allOrders} setAllOrders={setAllOrders} setCartCount={setCartCount} cartCount={cartCount}/>} />
             <Route path="/confirmation" element={<OrderConfirmation orderRef={orderRef} setOrderRef={setOrderRef}/>} />
           </Routes>
         </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {Container, Form, Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import './user.css'
 
 export default function Login(props) {
     console.log(props)
@@ -22,21 +24,25 @@ export default function Login(props) {
 
 
   return (
-    <div>
+    <div className='login-container'>
         <h1>Log In</h1>
-        <Container>
+        <Container bsPrefix='auth-form'>
             <Form.Group>
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control name="emailAddress" onChange={handleChange} />
+                <Form.Control className='auth-input' name="emailAddress" onChange={handleChange} />
             </Form.Group>
-
+            <br/>
             <Form.Group>
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="password" type="password" onChange={handleChange} />
+                <Form.Control className='auth-input' name="password" type="password" onChange={handleChange} />
             </Form.Group>
-
+            <br/>
             <Button variant="primary" onClick={loginHandler}>Log In</Button>
+            <div className='not-a-user'>
+                <p>Not signed up? <Link to='/signup'>Create an account!</Link> </p>
+            </div>
         </Container>
+
     </div>
   )
 }

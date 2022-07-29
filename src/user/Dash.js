@@ -30,8 +30,8 @@ export default function Dash(props) {
         <>
 
 
-            <div id='add-modal'>
-            <Modal isOpen={modalIsOpen} ariaHideApp={false}>
+            <div id='add-modal' >
+            <Modal isOpen={modalIsOpen} ariaHideApp={false} >
         
             <Button onClick={setModalIsOpenToFalse}>x</Button>
             <ProductCreateForm loadProductList={props.loadProductList} closeModal={setModalIsOpenToFalse} success={props.sucMessage} setSuccess={props.setSuccess} error={props.errMessage} setError={props.setError} />
@@ -58,9 +58,11 @@ export default function Dash(props) {
         
         </>
         ) : (
-            <div className='order-table'>
-                <h4>Customer Orders</h4>
-                <OrderHistory allOrders={props.allOrders} setAllOrders={props.setAllOrders} products={props.products} user={props.user}/>
+            <div className='dash-contents'>
+                <div className='order-table-buyer'>
+                    <h4>My Orders</h4>
+                    <OrderHistory allOrders={props.allOrders} setAllOrders={props.setAllOrders} products={props.products} user={props.user}/>
+                </div>
             </div>
         )
         }

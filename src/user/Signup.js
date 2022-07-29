@@ -68,47 +68,48 @@ export default function Signup(props) {
   return (
     <div>
         <h1>Sign Up</h1>
-        <Container>
+        <Container bsPrefix='auth-form'>
             <Form.Group>
                 <Form.Label>First Name</Form.Label>
-                <Form.Control name="firstName" onChange={handleChange}></Form.Control>
+                <Form.Control className='auth-input' name="firstName" onChange={handleChange}></Form.Control>
             </Form.Group>
 
             <br/>
 
             <Form.Group>
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control name="lastName" onChange={handleChange}></Form.Control>
+                <Form.Control className='auth-input' name="lastName" onChange={handleChange}></Form.Control>
             </Form.Group>
 
             <br/>
 
             <Form.Group>
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control name="emailAddress" onChange={handleChange}></Form.Control>
+                <Form.Control className='auth-input' name="emailAddress" onChange={handleChange}></Form.Control>
             </Form.Group>
 
             <br/>
 
             <Form.Group>
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="password" type="password" onChange={handleChange}></Form.Control>
+                <Form.Control className='auth-input' name="password" type="password" onChange={handleChange}></Form.Control>
             </Form.Group>
 
             <br/>
 
-            <Form.Group id="formgroup">
+            <Form.Group>
                 <div className="userType">
                     <Form.Label>Register as a seller?:</Form.Label>
                     <Switch className='switch' onChange={handleToggleChange} checked={checked}/>
                 </div>
                 
-                <Form.Group className='verify-seller'>
-                    <Form.Label>{userRole === "seller" ? ("Enter your seller verification code:") : ("")}</Form.Label>
-                    <Form.Control id="sellerKeyForm" type={userRole === "buyer" ? ("hidden") : ("text")} onChange={(e) => console.log(e.target.value)} autoComplete='new-password' onClick={(e) => {handleMask(e)}}></Form.Control>
-                </Form.Group>
             </Form.Group>
 
+                <Form.Group className='verify-seller'>
+                    <Form.Label>{userRole === "seller" ? ("Enter your seller verification code:") : ("")}</Form.Label>
+                    <Form.Control className='auth-input' id="sellerKeyForm" type={userRole === "buyer" ? ("hidden") : ("text")} onChange={(e) => console.log(e.target.value)} autoComplete='new-password' onClick={(e) => {handleMask(e)}}></Form.Control>
+                </Form.Group>
+                
             <br/>
 
 

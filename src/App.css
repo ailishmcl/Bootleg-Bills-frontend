@@ -1,2 +1,36 @@
+body {
+    font-family: 'Bungee Hairline', cursive;
+    font-weight: bold;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bungee', cursive;
+
+}
+.navbar-bg {
+    background-color: #00BFC3;
+}
 
 
+.nav-style {
+    color: black;
+    font-family: 'Bungee', cursive;
+
+}
+
+.nav-link {
+    color: #FF2273 !important;
+}
+.navbar-text {
+    color: #FF2273 !important;
+}
+.nav-link:hover {
+    color: #F8DC38 !important;
+}
+.navbar-text.dash-link:hover {
+    color: #F8DC38 !important;
+}
+
+
+.navbar-bg {
+    filter: drop-shadow(0 -4mm 5mm rgb(0, 0, 0));
+}

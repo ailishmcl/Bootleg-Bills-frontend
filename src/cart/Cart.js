@@ -68,7 +68,7 @@ export default function Cart(props) {
     
           <Card key={key} style={{width: '30rem'}} >
               <Col style={{width: '10rem'}}>
-              <Card.Img src={item.productImageUrl} style={{width: '8rem'}} />
+              <Card.Img src={item.productImageUrls[0]} style={{width: '8rem'}} />
               </Col>
                 <Col>
                <Card.Body style={{width: '20rem'}}>
@@ -103,7 +103,7 @@ export default function Cart(props) {
         <h1> In your cart: </h1>
             {cartItems}
             <h4> Subtotal: £{subtotalPrice} </h4>
-            <Button variant="primary" onClick={() => props.makeCart(props.cart)}>Go to checkout</Button>
+            <Button variant="primary" onClick={() => props.makeCart(props.cart)}>Go to Checkout</Button>
      
         
     </>

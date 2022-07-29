@@ -71,7 +71,11 @@ export default function ProductCreateForm(props) {
         console.log("Add Product")
         console.log(product)
         product.productImageUrls = newImageSet
-        Axios.post("product/add", product)
+        Axios.post("product/add", product, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
         .then(response => {
           console.log(response.data)
           !response.data.product ? props.setError("One or more required fields omitted.") : props.setSuccess("Product added successfully.")
@@ -86,6 +90,17 @@ export default function ProductCreateForm(props) {
         e.preventDefault();
         !sourceTypeAltered ? newProduct.productSourceType = defaultSourceType : (console.log("Source type set to user specified"))
         console.log(newProduct)
+        console.log(newImageSet)
+        const filterCriteria = (element) => {
+            if(element !== undefined){
+                return element
+            }
+            
+        }  
+        ;
+        let filterUndefinedUrls = newImageSet.filter(filterCriteria)
+        console.log("URLs with all undefined fields removed:", filterUndefinedUrls)
+        setNewImageSet(filterUndefinedUrls)
         if(!Object.keys(newProduct).length)
         {
             setModalAlert(true)
